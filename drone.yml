@@ -1,0 +1,24 @@
+pipeline:
+  public-online:      
+    image: plugins/docker 
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock 
+    commands:
+      - 'docker login --username=hesouli -p Cptbtptp123 registry.cn-beijing.aliyuncs.com'
+      - 'docker build --rm -t monitor-web .'
+      - 'docker tag monitor-web registry.cn-beijing.aliyuncs.com/monitor-kj/monitor-web'
+      - 'docker push registry.cn-beijing.aliyuncs.com/monitor-kj/monitor-web'
+    when: 
+      branch: master  
+  # rancher-online:
+  #   image: peloton/drone-rancher
+  #   url: 'https://rancher.11vx.cn'
+  #   access_key: FA4E73C7BE658BBD080C
+  #   secret_key: rox8c55t8KoWxsPaAatGMh9cKy9ShVa377tzxFeX
+  #   service: monitor/web
+  #   docker_image: 'registry.cn-beijing.aliyuncs.com/monitor-kj/monitor-web'
+  #   start_first: false
+  #   confirm: true
+  #   timeout: 300 
+  #   when:
+  #     branch: master 
